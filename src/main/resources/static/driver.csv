@@ -1,0 +1,4 @@
+created_date,last_updated_date,name,dob,children_details,address,city,state,zipcode
+CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,sirprasath,24/05/1999,1 boy and 1 girl,I2/218 staff quarters,erode,tamil nadu,638316
+CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,naveen,15/06/2000,1boy and 1 girl,Door no: 56 near girls high school,erode,tamil nadu,638316
+CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,sankar,24/09/2000,1boy and 1 girl,pachapalli,erode,tamil nadu,638316
