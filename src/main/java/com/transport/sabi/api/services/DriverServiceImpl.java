@@ -3,7 +3,7 @@ package com.transport.sabi.api.services;
 import com.transport.sabi.api.dao.QueryDao;
 import com.transport.sabi.api.domain.repository.DriverRepository;
 import com.transport.sabi.api.v1.mapper.DriverMapper;
-import com.transport.sabi.api.v1.model.DriverNamesWithLorryDto;
+import com.transport.sabi.api.v1.model.DriverDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public List<DriverNamesWithLorryDto> getDriversNameAndLorry() {
+    public List<DriverDto> getDriversNameAndLorry() {
         return queryDao.getDriversNameAndLorry()
                 .stream()
                 .map(driverMapper::driverNamesWithLorryId)
                 .map(driverNamesWithLorryDto -> {
-                    driverNamesWithLorryDto.setUrl("/api/v1/driver/names/" + driverNamesWithLorryDto.getDriverId());
+                    driverNamesWithLorryDto.setUrl("/api/v1/driver/names/" + driverNamesWithLorryDto.getId());
                     return driverNamesWithLorryDto;
                 }).collect(Collectors.toList());
     }

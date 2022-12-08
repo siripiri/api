@@ -1,7 +1,7 @@
 package com.transport.sabi.api.v1.mapper;
 
-import com.transport.sabi.api.v1.model.DriverNamesWithLorryDto;
+import com.transport.sabi.api.v1.model.DriverDto;
 
 public interface DriverMapper {
-    DriverNamesWithLorryDto driverNamesWithLorryId(Object[] objects);
+    DriverDto driverNamesWithLorryId(Object[] objects);
 }

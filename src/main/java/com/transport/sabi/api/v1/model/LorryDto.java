@@ -1,9 +1,6 @@
 package com.transport.sabi.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.transport.sabi.api.domain.Address;
-
-import javax.persistence.Embedded;
 
 public class LorryDto {
     public Long id;
@@ -11,6 +8,8 @@ public class LorryDto {
     public String type;
     public String modelNumber;
     public String manufacturer;
+    public Long driverId;
+    public String driverName;
     @JsonProperty("api_url")
     public String url;
 
@@ -52,6 +51,22 @@ public class LorryDto {
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public Long getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Long driverId) {
+        this.driverId = driverId;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getUrl() {

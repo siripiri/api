@@ -1,15 +1,17 @@
 package com.transport.sabi.api.services;
 
 import com.transport.sabi.api.dao.QueryDao;
+import com.transport.sabi.api.domain.Driver;
+import com.transport.sabi.api.domain.Lorry;
 import com.transport.sabi.api.domain.repository.DriverRepository;
 import com.transport.sabi.api.domain.repository.LorryRepository;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LorryMapper;
 import com.transport.sabi.api.v1.model.LorryDto;
-import com.transport.sabi.api.v1.model.LorryWithDriverNameDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,13 +53,29 @@ public class LorryServiceImpl implements LorryService {
     }
 
     @Override
-    public List<LorryWithDriverNameDto> getAllLorryWithDriverNameDto() {
+    public List<LorryDto> getAllLorryWithDriverNameDto() {
         return queryDao.getAllLorryAndDriverName()
                 .stream()
-                .map(lorryMapper::lorryToLorryWithDriverNameDto)
+                .map(lorryMapper::objectsToLorryWithDriverNameDto)
                 .map(lorryWithDriverNameDto -> {
                     lorryWithDriverNameDto.setUrl("/api/v1/lorry/driverName/" + lorryWithDriverNameDto.getId());
                     return lorryWithDriverNameDto;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public LorryDto saveLorry(LorryDto lorryDto) {
+        Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
+        if(lorryDto.getDriverId() != null) {
+            Driver driver = driverRepository.getReferenceById(lorryDto.getDriverId());
+            lorry.setDrivers(Set.of(driver));
+        }
+
+        Lorry savedLorry = lorryRepository.saveAndFlush(lorry);
+
+        LorryDto savedLorryDto = lorryMapper.lorryToLorryDto(savedLorry);
+        savedLorryDto.setUrl("/api/v1/lorry/" + savedLorryDto.getId());
+
+        return savedLorryDto;
     }
 }

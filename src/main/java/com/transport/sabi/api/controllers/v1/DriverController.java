@@ -1,7 +1,7 @@
 package com.transport.sabi.api.controllers.v1;
 
 import com.transport.sabi.api.services.DriverService;
-import com.transport.sabi.api.v1.model.DriverNamesWithLorryDto;
+import com.transport.sabi.api.v1.model.DriverDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +22,7 @@ public class DriverController {
     }
 
     @GetMapping(value = "/names", produces = "application/json")
-    public ResponseEntity<List<DriverNamesWithLorryDto>> getDriversNameAndLorry() {
+    public ResponseEntity<List<DriverDto>> getDriversNameAndLorry() {
         return new ResponseEntity<>(driverService.getDriversNameAndLorry(), HttpStatus.OK);
     }
 }
