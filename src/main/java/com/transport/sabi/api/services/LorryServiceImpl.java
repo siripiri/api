@@ -5,6 +5,7 @@ import com.transport.sabi.api.domain.Driver;
 import com.transport.sabi.api.domain.Lorry;
 import com.transport.sabi.api.domain.repository.DriverRepository;
 import com.transport.sabi.api.domain.repository.LorryRepository;
+import com.transport.sabi.api.services.exception.BadRequestException;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LorryMapper;
 import com.transport.sabi.api.v1.model.LorryDto;
@@ -63,9 +64,19 @@ public class LorryServiceImpl implements LorryService {
                 }).collect(Collectors.toList());
     }
 
+    private boolean numberPlateCheck(String numberPlate) {
+        Lorry lorry = this.lorryRepository.findByNumberPlate(numberPlate).orElse(null);
+        return lorry == null;
+    }
+
     @Override
     public LorryDto saveLorry(LorryDto lorryDto) {
         Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
+
+        if(!numberPlateCheck(lorry.getNumberPlate())) {
+            throw new BadRequestException("Number Plate already exist");
+        }
+
         if(lorryDto.getDriverId() != null) {
             Driver driver = driverRepository.getReferenceById(lorryDto.getDriverId());
             lorry.setDrivers(Set.of(driver));

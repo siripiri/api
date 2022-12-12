@@ -2,6 +2,7 @@ package com.transport.sabi.api.controllers.v1;
 
 import com.transport.sabi.api.controllers.RestResponseEntityExceptionHandler;
 import com.transport.sabi.api.services.LorryService;
+import com.transport.sabi.api.services.exception.BadRequestException;
 import com.transport.sabi.api.v1.model.LorryDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,11 @@ public class LorryController {
     }
 
     @PutMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<LorryDto> saveLorryDto(@RequestBody LorryDto lorryDto) {
-        return new ResponseEntity<>(lorryService.saveLorry(lorryDto), HttpStatus.OK);
+    public ResponseEntity<Object> saveLorryDto(@RequestBody LorryDto lorryDto) {
+        try {
+            return new ResponseEntity<>(lorryService.saveLorry(lorryDto), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 }
