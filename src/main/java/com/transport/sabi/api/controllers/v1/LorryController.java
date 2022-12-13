@@ -42,7 +42,25 @@ public class LorryController {
     @PutMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> saveLorryDto(@RequestBody LorryDto lorryDto) {
         try {
-            return new ResponseEntity<>(lorryService.saveLorry(lorryDto), HttpStatus.OK);
+            return new ResponseEntity<>(lorryService.saveLorry(lorryDto, false), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping(produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Object> updateLorryDto(@RequestBody LorryDto lorryDto) {
+        try {
+            return new ResponseEntity<>(lorryService.saveLorry(lorryDto, true), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping(value = "/unassignDriver", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Object> unassignDriver(@RequestBody LorryDto lorryDto) {
+        try {
+            return new ResponseEntity<>(lorryService.unassignDriver(lorryDto), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }

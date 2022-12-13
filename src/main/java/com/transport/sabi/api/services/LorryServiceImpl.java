@@ -1,5 +1,6 @@
 package com.transport.sabi.api.services;
 
+import com.transport.sabi.api.dao.HibernateDao;
 import com.transport.sabi.api.dao.QueryDao;
 import com.transport.sabi.api.domain.Driver;
 import com.transport.sabi.api.domain.Lorry;
@@ -22,12 +23,14 @@ public class LorryServiceImpl implements LorryService {
     private final DriverRepository driverRepository;
     private final QueryDao queryDao;
     private final LorryMapper lorryMapper;
+    private final HibernateDao hibernateDao;
 
-    public LorryServiceImpl(LorryRepository lorryRepository, LorryMapper lorryMapper, DriverRepository driverRepository, QueryDao queryDao) {
+    public LorryServiceImpl(LorryRepository lorryRepository, LorryMapper lorryMapper, DriverRepository driverRepository, QueryDao queryDao, HibernateDao hibernateDao) {
         this.lorryRepository = lorryRepository;
         this.lorryMapper = lorryMapper;
         this.driverRepository = driverRepository;
         this.queryDao = queryDao;
+        this.hibernateDao = hibernateDao;
     }
 
     @Override
@@ -69,24 +72,51 @@ public class LorryServiceImpl implements LorryService {
         return lorry == null;
     }
 
-    @Override
-    public LorryDto saveLorry(LorryDto lorryDto) {
+    public boolean assignDriver(LorryDto lorryDto) {
         Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
-
-        if(!numberPlateCheck(lorry.getNumberPlate())) {
-            throw new BadRequestException("Number Plate already exist");
-        }
-
         if(lorryDto.getDriverId() != null) {
             Driver driver = driverRepository.getReferenceById(lorryDto.getDriverId());
             lorry.setDrivers(Set.of(driver));
+            lorryRepository.saveAndFlush(lorry);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public LorryDto unassignDriver(LorryDto lorryDto) {
+        System.out.println("Hello "+lorryDto.getId());
+        Lorry lorry = lorryRepository.findById(lorryDto.getId()).orElse(null);
+        Driver driver = null;
+        if(lorryDto.driverId != null) {
+            driver = driverRepository.findById(lorryDto.getDriverId()).orElse(null);
+        } else {
+            driver = driverRepository.findByName(lorryDto.getDriverName()).orElse(null);
         }
 
+        if(lorry == null || driver == null) {
+            throw new BadRequestException("can't find driver or lorry");
+        }
+        lorry.drivers.remove(driver);
         Lorry savedLorry = lorryRepository.saveAndFlush(lorry);
+        return lorryMapper.lorryToLorryDto(savedLorry);
+    }
+
+    @Override
+    public LorryDto saveLorry(LorryDto lorryDto, boolean isUpdate) {
+        Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
+
+        if( !isUpdate && !numberPlateCheck(lorry.getNumberPlate())) {
+            throw new BadRequestException("Number Plate already exist");
+        }
+
+        Lorry savedLorry = hibernateDao.saveOrUpdate(lorry);
 
         LorryDto savedLorryDto = lorryMapper.lorryToLorryDto(savedLorry);
         savedLorryDto.setUrl("/api/v1/lorry/" + savedLorryDto.getId());
 
         return savedLorryDto;
     }
+
+
 }

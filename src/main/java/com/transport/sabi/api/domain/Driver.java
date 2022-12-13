@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 public class Driver extends BaseEntity {
     private String name;
-    private Timestamp dob;
+    private String dob;
     private String childrenDetails;
     @Embedded
     private Address address;
@@ -28,11 +28,11 @@ public class Driver extends BaseEntity {
         this.name = name;
     }
 
-    public Timestamp getDob(Timestamp dob) {
+    public String getDob(String dob) {
         return dob;
     }
 
-    public void setDob(Timestamp dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

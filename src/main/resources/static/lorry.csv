@@ -1,4 +1,4 @@
-created_date,last_updated_date,number_plate,type,model_number,manufacturer
-CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,TN 36 B 6148,Lorry,1.1.1.1,benz
-CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,TN 36 H 7826,Lorry,2.2.2.2,bmw
-CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,TN 36 K 6729,Lorry,3.3.3.3,apple
+number_plate,type,model_number,manufacturer
+TN 36 B 6148,Lorry,1.1.1.1,benz
+TN 36 H 7826,Lorry,2.2.2.2,bmw
+TN 36 K 6729,Lorry,3.3.3.3,apple

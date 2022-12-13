@@ -8,5 +8,6 @@ public interface LorryService {
     List<LorryDto> getAllLorryDto();
     LorryDto getLorryDtoById(Long id);
     List<LorryDto> getAllLorryWithDriverNameDto();
-    LorryDto saveLorry(LorryDto lorryDto);
+    LorryDto saveLorry(LorryDto lorryDto, boolean isUpdate);
+    LorryDto unassignDriver(LorryDto lorryDto);
 }

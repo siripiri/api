@@ -64,7 +64,7 @@ public class LoadData implements CommandLineRunner {
 
     public Driver loadDriver() throws ParseException {
         Driver driver = new Driver();
-        driver.setDob(this.getDate("24/05/1999"));
+        driver.setDob("24/05/1999");
         Address address = new Address();
         address.setZipcode("638316");
         address.setAddress("chithode");
