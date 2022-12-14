@@ -72,15 +72,18 @@ public class LorryServiceImpl implements LorryService {
         return lorry == null;
     }
 
-    public boolean assignDriver(LorryDto lorryDto) {
-        Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
-        if(lorryDto.getDriverId() != null) {
-            Driver driver = driverRepository.getReferenceById(lorryDto.getDriverId());
-            lorry.setDrivers(Set.of(driver));
-            lorryRepository.saveAndFlush(lorry);
-            return true;
+    @Override
+    public LorryDto assignDriver(LorryDto lorryDto) {
+        Driver driver = driverRepository.findByName(lorryDto.getDriverName()).orElse(null);
+        if(driver == null) {
+            throw new BadRequestException("driver is null");
         }
-        return false;
+        this.queryDao.insertAssignDriver(driver.getId(), lorryDto.getId());
+        Lorry updatedLorry = this.lorryRepository.getReferenceById(lorryDto.getId());
+        LorryDto savedLorryDto = this.lorryMapper.lorryToLorryDto(updatedLorry);
+        savedLorryDto.setDriverName(driver.getName());
+        savedLorryDto.setUrl("/api/v1/lorry/" + savedLorryDto.getId());
+        return savedLorryDto;
     }
 
     @Override

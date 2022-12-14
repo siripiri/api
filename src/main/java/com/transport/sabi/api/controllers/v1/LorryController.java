@@ -65,4 +65,13 @@ public class LorryController {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping(value = "/assignDriver", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Object> assignDriver(@RequestBody LorryDto lorryDto) {
+        try {
+            return new ResponseEntity<>(lorryService.assignDriver(lorryDto), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

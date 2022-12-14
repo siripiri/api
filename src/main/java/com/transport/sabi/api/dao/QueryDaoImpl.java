@@ -86,4 +86,22 @@ public class QueryDaoImpl implements QueryDao {
             entityManager.close();
         }
     }
+
+    @Override
+    public int insertAssignDriver(Long driverId, Long lorryId) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("insert into " +
+                    "LORRY_DRIVER (LORRY_ID, DRIVER_ID) " +
+                    "VALUES (?1, ?2);");
+            query.setParameter(1, lorryId);
+            query.setParameter(2, driverId);
+            return query.executeUpdate();
+        } catch (Exception e) {
+            return -1;
+        } finally {
+            entityManager.close();
+        }
+    }
 }

@@ -8,4 +8,5 @@ public interface QueryDao {
     int updateLocation(LocationDtoPost locationDtoPost, Long id);
     List<Object[]> getAllLorryAndDriverName();
     List<Object[]> getDriversNameAndLorry();
+    int insertAssignDriver(Long driverId, Long lorryId);
 }
