@@ -88,6 +88,24 @@ public class QueryDaoImpl implements QueryDao {
     }
 
     @Override
+    public List<Object[]> getDriversWithLorry() {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("select D.ID, D.NAME, D.DOB, D.CHILDREN_DETAILS, D.ADDRESS, D.CITY, D.STATE, " +
+                    "D.ZIPCODE, L.ID as LORRY_ID, L.NUMBER_PLATE " +
+                    "from DRIVER D " +
+                    "left join LORRY_DRIVER LD on D.ID = LD.DRIVER_ID " +
+                    "left join LORRY L on L.ID=LD.LORRY_ID;");
+            return (List<Object[]>) query.getResultList();
+        } catch (ResourceNotFoundException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
     public int insertAssignDriver(Long driverId, Long lorryId) {
         EntityManager entityManager = getEntityManager();
         try {

@@ -106,14 +106,14 @@ public class LorryServiceImpl implements LorryService {
     }
 
     @Override
-    public LorryDto saveLorry(LorryDto lorryDto, boolean isUpdate) {
+    public LorryDto saveLorry(LorryDto lorryDto) {
         Lorry lorry = lorryMapper.lorryDtoToLorry(lorryDto);
 
-        if( !isUpdate && !numberPlateCheck(lorry.getNumberPlate())) {
+        if(!numberPlateCheck(lorry.getNumberPlate())) {
             throw new BadRequestException("Number Plate already exist");
         }
 
-        Lorry savedLorry = hibernateDao.saveOrUpdate(lorry);
+        Lorry savedLorry = lorryRepository.saveAndFlush(lorry);
 
         LorryDto savedLorryDto = lorryMapper.lorryToLorryDto(savedLorry);
         savedLorryDto.setUrl("/api/v1/lorry/" + savedLorryDto.getId());
@@ -121,5 +121,19 @@ public class LorryServiceImpl implements LorryService {
         return savedLorryDto;
     }
 
+    @Override
+    public LorryDto updateLorry(LorryDto lorryDto) {
+        Lorry lorry = lorryRepository.findById(lorryDto.getId())
+                .orElseThrow(ResourceNotFoundException::new);
+
+        lorryRepository.updateLorryById(lorryDto.getNumberPlate(), lorryDto.getModelNumber(), lorryDto.getManufacturer(),
+                lorryDto.getType(), lorry.getId());
+
+        Lorry updatedLorry = lorryRepository.getReferenceById(lorry.getId());
+
+        LorryDto updatedLorryDto = lorryMapper.lorryToLorryDto(updatedLorry);
+        updatedLorryDto.setUrl("/api/v1/lorry/" + updatedLorryDto.getId());
+        return updatedLorryDto;
+    }
 
 }

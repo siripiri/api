@@ -1,9 +1,6 @@
 package com.transport.sabi.api.domain;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +25,7 @@ public class Driver extends BaseEntity {
         this.name = name;
     }
 
-    public String getDob(String dob) {
+    public String getDob() {
         return dob;
     }
 

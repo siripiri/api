@@ -1,7 +1,6 @@
 package com.transport.sabi.api.dao;
 
-import com.transport.sabi.api.domain.Lorry;
-import com.transport.sabi.api.v1.model.LorryDto;
+import com.transport.sabi.api.domain.repository.LorryRepository;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -12,23 +11,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class HibernateDaoImpl implements HibernateDao {
     private final EntityManagerFactory entityManagerFactory;
+    private final LorryRepository lorryRepository;
 
-    public HibernateDaoImpl(EntityManagerFactory entityManagerFactory) {
+    public HibernateDaoImpl(EntityManagerFactory entityManagerFactory,
+                            LorryRepository lorryRepository) {
         this.entityManagerFactory = entityManagerFactory;
+        this.lorryRepository = lorryRepository;
     }
 
     private EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
-    }
-
-    @Override
-    public Lorry saveOrUpdate(Lorry lorry) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(lorry);
-        entityManager.flush();
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        return lorry;
     }
 }

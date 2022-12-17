@@ -42,7 +42,7 @@ public class LorryController {
     @PutMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> saveLorryDto(@RequestBody LorryDto lorryDto) {
         try {
-            return new ResponseEntity<>(lorryService.saveLorry(lorryDto, false), HttpStatus.OK);
+            return new ResponseEntity<>(lorryService.saveLorry(lorryDto), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
@@ -51,7 +51,7 @@ public class LorryController {
     @PatchMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> updateLorryDto(@RequestBody LorryDto lorryDto) {
         try {
-            return new ResponseEntity<>(lorryService.saveLorry(lorryDto, true), HttpStatus.OK);
+            return new ResponseEntity<>(lorryService.updateLorry(lorryDto), HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }

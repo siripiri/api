@@ -9,4 +9,5 @@ public interface QueryDao {
     List<Object[]> getAllLorryAndDriverName();
     List<Object[]> getDriversNameAndLorry();
     int insertAssignDriver(Long driverId, Long lorryId);
+    List<Object[]> getDriversWithLorry();
 }
