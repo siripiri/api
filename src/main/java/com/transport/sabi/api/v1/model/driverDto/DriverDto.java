@@ -1,4 +1,4 @@
-package com.transport.sabi.api.v1.model;
+package com.transport.sabi.api.v1.model.driverDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.transport.sabi.api.domain.Address;
@@ -9,12 +9,14 @@ public class DriverDto {
     public Long id;
     public Long lorryId;
     public String numberPlate;
+    public String dob;
+    public String driverName;
+    public String gender;
+    public String phoneNumber1;
+    public String phoneNumber2;
 
     @Embedded
     public Address address;
-    public String dob;
-    public String childrenDetails;
-    public String driverName;
     @JsonProperty("api_url")
     public String url;
 
@@ -74,11 +76,27 @@ public class DriverDto {
         this.dob = dob;
     }
 
-    public String getChildrenDetails() {
-        return childrenDetails;
+    public String getGender() {
+        return gender;
     }
 
-    public void setChildrenDetails(String childrenDetails) {
-        this.childrenDetails = childrenDetails;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoneNumber1() {
+        return phoneNumber1;
+    }
+
+    public void setPhoneNumber1(String phoneNumber1) {
+        this.phoneNumber1 = phoneNumber1;
+    }
+
+    public String getPhoneNumber2() {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2) {
+        this.phoneNumber2 = phoneNumber2;
     }
 }

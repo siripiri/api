@@ -2,7 +2,7 @@ package com.transport.sabi.api.services;
 
 import com.transport.sabi.api.dao.HibernateDao;
 import com.transport.sabi.api.dao.QueryDao;
-import com.transport.sabi.api.domain.Driver;
+import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.Lorry;
 import com.transport.sabi.api.domain.repository.DriverRepository;
 import com.transport.sabi.api.domain.repository.LorryRepository;
@@ -13,7 +13,6 @@ import com.transport.sabi.api.v1.model.LorryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

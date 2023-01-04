@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- LOCATION TABLE -->
+    <changeSet id="1671307377439-1" author="sriprasath">
+        <createTable tableName="location">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_location"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="distributor_name" type="VARCHAR(255)"/>
+            <column name="km_allocated" type="BIGINT"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="state" type="VARCHAR(255)"/>
+            <column name="zipcode" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- LORRY TABLE -->
+    <changeSet id="1671307109106-1" author="sriprasath">
+        <createTable tableName="lorry">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_lorry"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="number_plate" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="model_number" type="VARCHAR(255)"/>
+            <column name="manufacturer" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- DRIVER TABLE -->
+    <changeSet id="1671310510199-1" author="sriprasath">
+        <createTable tableName="driver">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_driver"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_updated_date" type="DATETIME"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="dob" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="state" type="VARCHAR(255)"/>
+            <column name="zipcode" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- PERSONAL INFORMATION TABLE FOR DRIVER -->
+    <changeSet id="1671310425847-1" author="sriprasath">
+        <createTable tableName="personal_information">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_personalinformation"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="nationality" type="VARCHAR(255)"/>
+            <column name="religion" type="VARCHAR(255)"/>
+            <column name="martial_status" type="VARCHAR(255)"/>
+            <column name="employment_of_spouse" type="VARCHAR(255)"/>
+            <column name="children" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="driver_licence" type="VARCHAR(255)"/>
+            <column name="aadhar_no" type="VARCHAR(255)"/>
+            <column name="whatsapp_no" type="VARCHAR(255)"/>
+            <column name="driver_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id" baseTableName="personal_information" constraintName="FK_PERSONALINFORMATION_ON_DRIVER" referencedColumnNames="id" referencedTableName="driver"/>
+    </changeSet>
+
+    <!-- EMERGENCY CONTACT TABLE FOR DRIVER -->
+    <changeSet id="1671310587499-1" author="sriprasath">
+        <createTable tableName="emergency_contact">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_emergencycontact"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="relationship" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="driver_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id" baseTableName="emergency_contact" constraintName="FK_EMERGENCYCONTACT_ON_DRIVER" referencedColumnNames="id" referencedTableName="driver"/>
+    </changeSet>
+
+    <!-- FAMILY INFORMATION TABLE FOR DRIVER -->
+    <changeSet id="1671310661913-1" author="sriprasath">
+        <createTable tableName="family_information">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_familyinformation"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="dob" type="VARCHAR(255)"/>
+            <column name="relation_ship" type="VARCHAR(255)"/>
+            <column name="driver_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id" baseTableName="family_information" constraintName="FK_FAMILYINFORMATION_ON_DRIVER" referencedColumnNames="id" referencedTableName="driver"/>
+    </changeSet>
+
+</databaseChangeLog>

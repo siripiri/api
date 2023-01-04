@@ -1,6 +1,6 @@
 package com.transport.sabi.api.dao;
 
-import com.transport.sabi.api.domain.repository.LorryRepository;
+import com.transport.sabi.api.domain.driver.Driver;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -11,15 +11,23 @@ import javax.transaction.Transactional;
 @Transactional
 public class HibernateDaoImpl implements HibernateDao {
     private final EntityManagerFactory entityManagerFactory;
-    private final LorryRepository lorryRepository;
 
-    public HibernateDaoImpl(EntityManagerFactory entityManagerFactory,
-                            LorryRepository lorryRepository) {
+    public HibernateDaoImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
-        this.lorryRepository = lorryRepository;
     }
 
     private EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
+    }
+
+    @Override
+    public Driver saveDriver(Driver driver) {
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(driver);
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return driver;
     }
 }

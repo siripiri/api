@@ -1,19 +1,22 @@
 package com.transport.sabi.api.services;
 
-import com.transport.sabi.api.dao.HibernateDao;
 import com.transport.sabi.api.dao.QueryDao;
-import com.transport.sabi.api.domain.Driver;
+import com.transport.sabi.api.domain.driver.Driver;
+import com.transport.sabi.api.domain.driver.EmergencyContact;
+import com.transport.sabi.api.domain.driver.FamilyInformation;
+import com.transport.sabi.api.domain.driver.PersonalInformation;
 import com.transport.sabi.api.domain.repository.DriverRepository;
-import com.transport.sabi.api.domain.repository.LocationRepository;
-import com.transport.sabi.api.domain.repository.LorryRepository;
-import com.transport.sabi.api.services.exception.BadRequestException;
+import com.transport.sabi.api.domain.repository.EmergencyContactRepository;
+import com.transport.sabi.api.domain.repository.FamilyInformationRepository;
+import com.transport.sabi.api.domain.repository.PersonalInformationRepository;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.DriverMapper;
-import com.transport.sabi.api.v1.model.DriverDto;
-import com.transport.sabi.api.v1.model.LorryDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverFormDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,19 +25,20 @@ public class DriverServiceImpl implements DriverService {
     private final QueryDao queryDao;
     private final DriverRepository driverRepository;
     private final DriverMapper driverMapper;
-    private final LorryRepository lorryRepository;
-    private final HibernateDao hibernateDao;
-    private final LocationRepository locationRepository;
+    private final PersonalInformationRepository personalInformationRepository;
+    private final EmergencyContactRepository emergencyContactRepository;
+    private final FamilyInformationRepository familyInformationRepository;
 
     public DriverServiceImpl(QueryDao queryDao, DriverRepository driverRepository, DriverMapper driverMapper,
-                             LorryRepository lorryRepository, HibernateDao hibernateDao,
-                             LocationRepository locationRepository) {
+                             PersonalInformationRepository personalInformationRepository,
+                             EmergencyContactRepository emergencyContactRepository,
+                             FamilyInformationRepository familyInformationRepository) {
         this.queryDao = queryDao;
         this.driverRepository = driverRepository;
         this.driverMapper = driverMapper;
-        this.lorryRepository = lorryRepository;
-        this.hibernateDao = hibernateDao;
-        this.locationRepository = locationRepository;
+        this.personalInformationRepository = personalInformationRepository;
+        this.emergencyContactRepository = emergencyContactRepository;
+        this.familyInformationRepository = familyInformationRepository;
     }
 
     @Override
@@ -77,7 +81,9 @@ public class DriverServiceImpl implements DriverService {
 
         driver.setAddress(driverDto.getAddress());
         driver.setName(driverDto.getDriverName());
-        driver.setChildrenDetails(driverDto.getChildrenDetails());
+        driver.setGender(driverDto.getGender());
+        driver.setPhoneNumber1(driverDto.getPhoneNumber1());
+        driver.setPhoneNumber2(driverDto.getPhoneNumber1());
         driver.setDob(driverDto.getDob());
 
         Driver updatedDriver = driverRepository.save(driver);
@@ -95,7 +101,52 @@ public class DriverServiceImpl implements DriverService {
                     return driverDto;
                 })
                 .orElseThrow(ResourceNotFoundException::new);
+    }
 
+    @Override
+    public DriverFormDto getDriverFormDtoById(Long id) {
+        Driver driver = driverRepository.findById(id).orElse(null);
+        if(driver == null) return null;
+
+        DriverFormDto driverFormDto = driverMapper.driverToDriverFormDto(driver);
+        driverFormDto.setAddress(driver.getAddress());
+        driverFormDto.setUrl("/api/v1/driver/" + driverFormDto.getProfile().getId());
+        return driverFormDto;
+    }
+
+    @Override
+    public DriverFormDto saveDriverFormDto(DriverFormDto driverFormDto) {
+
+        // Driver
+        Driver driver = driverMapper.driverFormDtoToDriver(driverFormDto);
+
+        // Address
+        driver.setAddress(driverFormDto.getAddress());
+
+        // Personal Information
+        PersonalInformation personalInformation = driverMapper.
+                personalInformationDtoToPersonalInformation(driverFormDto.getPersonalInformation());
+        personalInformation.setDriver(driver);
+
+        // Emergency Contact
+        Set<EmergencyContact> emergencyContacts = driverFormDto.getEmergencyContacts().stream()
+                .map(driverMapper::emergencyContactDtoToEmergencyContact)
+                .peek(driver::addEmergencyContact)
+                .collect(Collectors.toSet());
+
+        // Family Information
+        Set<FamilyInformation> familyInformations = driverFormDto.getFamilyInformations().stream()
+                .map(driverMapper::familyInformationDtoToFamilyInformation)
+                .peek(driver::addFamilyInformation)
+                .collect(Collectors.toSet());
+
+        // Relationship
+        driver.setPersonalInformation(personalInformation);
+
+        Driver savedDriver = driverRepository.save(driver);
+        DriverFormDto savedDriverFormDto = driverMapper.driverToDriverFormDto(savedDriver);
+        savedDriverFormDto.setUrl("/api/v1/driver/" + savedDriverFormDto.getProfile().getId());
+        return savedDriverFormDto;
     }
 
 }

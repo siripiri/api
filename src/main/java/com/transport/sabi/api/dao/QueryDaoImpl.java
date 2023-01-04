@@ -92,8 +92,8 @@ public class QueryDaoImpl implements QueryDao {
         EntityManager entityManager = getEntityManager();
         try {
             entityManager.joinTransaction();
-            Query query = entityManager.createNativeQuery("select D.ID, D.NAME, D.DOB, D.CHILDREN_DETAILS, D.ADDRESS, D.CITY, D.STATE, " +
-                    "D.ZIPCODE, L.ID as LORRY_ID, L.NUMBER_PLATE " +
+            Query query = entityManager.createNativeQuery("select D.ID, D.NAME, D.DOB, D.GENDER, D.PHONE_NUMBER1, D.PHONE_NUMBER2," +
+                    " D.ADDRESS, D.CITY, D.STATE, D.ZIPCODE, L.ID as LORRY_ID, L.NUMBER_PLATE " +
                     "from DRIVER D " +
                     "left join LORRY_DRIVER LD on D.ID = LD.DRIVER_ID " +
                     "left join LORRY L on L.ID=LD.LORRY_ID;");

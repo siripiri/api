@@ -7,10 +7,10 @@
     <changeSet id="1667029986454-1" author="sriprasath">
         <loadData tableName="lorry" file="/static/lorry.csv"/>
     </changeSet>
-    <changeSet id="1667030058307-1" author="sriprasath">
+    <!--<changeSet id="1667030058307-1" author="sriprasath">
         <loadData tableName="driver" file="static/driver.csv"/>
     </changeSet>
     <changeSet id="1667030078675-1" author="sriprasath">
         <loadData tableName="lorry_driver" file="static/lorry_driver.csv"/>
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

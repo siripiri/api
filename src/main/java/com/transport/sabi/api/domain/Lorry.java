@@ -1,5 +1,7 @@
 package com.transport.sabi.api.domain;
 
+import com.transport.sabi.api.domain.driver.Driver;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

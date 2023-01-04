@@ -2,7 +2,8 @@ package com.transport.sabi.api.controllers.v1;
 
 import com.transport.sabi.api.controllers.RestResponseEntityExceptionHandler;
 import com.transport.sabi.api.services.DriverService;
-import com.transport.sabi.api.v1.model.DriverDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverFormDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class DriverController {
     }
 
     @PutMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<DriverDto> saveDriverDto(@RequestBody DriverDto driverDto) {
-        return new ResponseEntity<>(driverService.save(driverDto), HttpStatus.OK);
+    public ResponseEntity<DriverFormDto> saveDriverDto(@RequestBody DriverFormDto driverFormDto) {
+        return new ResponseEntity<>(driverService.saveDriverFormDto(driverFormDto), HttpStatus.OK);
     }
 
     @PatchMapping(produces = "application/json", consumes = "application/json")
@@ -42,7 +43,7 @@ public class DriverController {
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Object> getDriverById(@PathVariable String id) {
         try{
-            return new ResponseEntity<>(driverService.getLorryDtoById(Long.valueOf(id)), HttpStatus.OK);
+            return new ResponseEntity<>(driverService.getDriverFormDtoById(Long.valueOf(id)), HttpStatus.OK);
         } catch (NumberFormatException e) {
             return new RestResponseEntityExceptionHandler().handleBadRequest(e);
         }
