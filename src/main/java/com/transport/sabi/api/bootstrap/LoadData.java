@@ -5,10 +5,10 @@ import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.driver.EmergencyContact;
 import com.transport.sabi.api.domain.driver.FamilyInformation;
 import com.transport.sabi.api.domain.driver.PersonalInformation;
-import com.transport.sabi.api.domain.repository.DriverRepository;
-import com.transport.sabi.api.domain.repository.LocationRepository;
-import com.transport.sabi.api.domain.repository.LorryRepository;
-import com.transport.sabi.api.domain.repository.PersonalInformationRepository;
+import com.transport.sabi.api.domain.expenses.Expenses;
+import com.transport.sabi.api.domain.expenses.ExpensesCategory;
+import com.transport.sabi.api.domain.expenses.Fuel;
+import com.transport.sabi.api.domain.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,9 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class LoadData implements CommandLineRunner {
@@ -25,13 +27,19 @@ public class LoadData implements CommandLineRunner {
     private final LorryRepository lorryRepository;
     private final DriverRepository driverRepository;
     private final PersonalInformationRepository personalInformationRepository;
+    private final ExpensesRespository expensesRespository;
+    private final ExpensesCategoryRepository expensesCategoryRepository;
 
-    public LoadData(LocationRepository locationRepository, LorryRepository lorryRepository, DriverRepository driverRepository,
-                    PersonalInformationRepository personalInformationRepository) {
+    private final FuelRepository fuelRepository;
+
+    public LoadData(LocationRepository locationRepository, LorryRepository lorryRepository, DriverRepository driverRepository, PersonalInformationRepository personalInformationRepository, ExpensesRespository expensesRespository, ExpensesCategoryRepository expensesCategoryRepository, FuelRepository fuelRepository) {
         this.locationRepository = locationRepository;
         this.lorryRepository = lorryRepository;
         this.driverRepository = driverRepository;
         this.personalInformationRepository = personalInformationRepository;
+        this.expensesRespository = expensesRespository;
+        this.expensesCategoryRepository = expensesCategoryRepository;
+        this.fuelRepository = fuelRepository;
     }
 
     public void loadLocation() {
@@ -121,6 +129,58 @@ public class LoadData implements CommandLineRunner {
         return familyInformation;
     }
 
+    public List<ExpensesCategory> loadExpensesCategory() {
+        ExpensesCategory expensesCategory1 = new ExpensesCategory();
+        expensesCategory1.setName("Repair");
+
+        ExpensesCategory expensesCategory2 = new ExpensesCategory();
+        expensesCategory2.setName("Fuel");
+
+        return List.of(expensesCategory1, expensesCategory2);
+    }
+
+    public List<Expenses> loadExpenses() {
+        Expenses expenses1 = new Expenses();
+        expenses1.setName("Fuel");
+        expenses1.setAmount("1000.00");
+        expenses1.setDate("24/05/1999");
+        expenses1.setNotes("Hello World");
+        ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElse(null);
+        expenses1.setExpensesCategory(expensesCategory);
+
+        Expenses expenses2 = new Expenses();
+        expenses2.setName("Fuel");
+        expenses2.setAmount("1000.00");
+        expenses2.setDate("24/05/1999");
+        expenses2.setNotes("Hello World");
+        expensesCategory = expensesCategoryRepository.findByName("Repair").orElse(null);
+        expenses2.setExpensesCategory(expensesCategory);
+
+        return List.of(expenses1, expenses2);
+    }
+
+    public Fuel loadFuelExpenses() {
+        Expenses expenses1 = new Expenses();
+        expenses1.setName("Fuel");
+        expenses1.setAmount("500.00");
+        expenses1.setDate("24/05/1999");
+        expenses1.setNotes("Hello World");
+        ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElse(null);
+        expenses1.setExpensesCategory(expensesCategory);
+
+        Expenses saved = expensesRespository.saveAndFlush(expenses1);
+
+        Fuel fuel = new Fuel();
+        fuel.setExpenses(saved);
+        fuel.setCurrentPrice("100.00");
+        fuel.setLiterFilled(5L);
+        fuel.setPaymentMode("CARD");
+
+
+
+        return fuel;
+    }
+
     public void loadData() throws ParseException {
         Lorry lorry = loadLorry();
         Driver driver = loadDriver();
@@ -129,6 +189,9 @@ public class LoadData implements CommandLineRunner {
 
         lorryRepository.save(lorry);
         driverRepository.save(driver);
+        expensesCategoryRepository.saveAllAndFlush(loadExpensesCategory());
+        expensesRespository.saveAllAndFlush(loadExpenses());
+        fuelRepository.saveAndFlush(loadFuelExpenses());
     }
 
     @Override

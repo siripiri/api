@@ -37,10 +37,7 @@ public class LorryServiceImpl implements LorryService {
         return lorryRepository.findAll()
                 .stream()
                 .map(lorryMapper::lorryToLorryDto)
-                .map(lorryDto -> {
-                    lorryDto.setUrl("/api/v1/lorry/" + lorryDto.getId());
-                    return lorryDto;
-                })
+                .peek(lorryDto -> lorryDto.setUrl("/api/v1/lorry/" + lorryDto.getId()))
                 .collect(Collectors.toList());
     }
 
