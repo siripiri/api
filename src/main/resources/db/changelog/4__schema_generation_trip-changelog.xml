@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- TRIP DETAILS -->
+    <changeSet id="1675356298586-1" author="sriprasath">
+        <createTable tableName="trip_detail">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tripdetail"/>
+            </column>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="date" type="VARCHAR(255)"/>
+            <column name="plant_to_distributor" type="BIGINT"/>
+            <column name="distributor_to_plant" type="BIGINT"/>
+            <column name="plant_start" type="VARCHAR(255)"/>
+            <column name="des_end" type="VARCHAR(255)"/>
+            <column name="des_start" type="VARCHAR(255)"/>
+            <column name="plant_end" type="VARCHAR(255)"/>
+            <column name="location_id" type="BIGINT"/>
+            <column name="lorry_id" type="BIGINT"/>
+            <column name="driver_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id" baseTableName="trip_detail" constraintName="FK_TRIPDETAIL_ON_DRIVER" referencedColumnNames="id" referencedTableName="driver"/>
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="trip_detail" constraintName="FK_TRIPDETAIL_ON_LOCATION" referencedColumnNames="id" referencedTableName="location"/>
+        <addForeignKeyConstraint baseColumnNames="lorry_id" baseTableName="trip_detail" constraintName="FK_TRIPDETAIL_ON_LORRY" referencedColumnNames="id" referencedTableName="lorry"/>
+    </changeSet>
+
+</databaseChangeLog>

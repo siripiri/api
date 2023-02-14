@@ -1,10 +1,13 @@
 package com.transport.sabi.api.v1.mapper;
 
 import com.transport.sabi.api.domain.Location;
-import com.transport.sabi.api.v1.model.LocationDtoPost;
-import com.transport.sabi.api.v1.model.LocationsDTO;
+import com.transport.sabi.api.v1.model.location.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationTripDto;
+import com.transport.sabi.api.v1.model.location.LocationsDTO;
 
 public interface LocationMapper {
-    public LocationsDTO locationToLocationDTO(Location location);
-    public Location locationDtoPostToLocation(LocationDtoPost locationDtoPost);
+    LocationsDTO locationToLocationDTO(Location location);
+    Location locationDtoPostToLocation(LocationDtoPost locationDtoPost);
+    LocationTripDto getLocationTrip(Object[] objects);
+    LocationTripDto locationToLocationTripDto(Location location);
 }

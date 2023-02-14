@@ -4,12 +4,13 @@ import com.transport.sabi.api.dao.HibernateDao;
 import com.transport.sabi.api.dao.QueryDao;
 import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.Lorry;
-import com.transport.sabi.api.domain.repository.DriverRepository;
-import com.transport.sabi.api.domain.repository.LorryRepository;
+import com.transport.sabi.api.repository.DriverRepository;
+import com.transport.sabi.api.repository.LorryRepository;
 import com.transport.sabi.api.services.exception.BadRequestException;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LorryMapper;
-import com.transport.sabi.api.v1.model.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -132,4 +133,11 @@ public class LorryServiceImpl implements LorryService {
         return updatedLorryDto;
     }
 
+    @Override
+    public List<LorryIdPlateDto> getAllLorryNameAndId() {
+        return queryDao.getAllLorryNameAndId()
+                .stream()
+                .map(lorryMapper::objectsToLorryNameWithId)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,26 +1,14 @@
-package com.transport.sabi.api.v1.model;
+package com.transport.sabi.api.v1.model.location;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.transport.sabi.api.domain.Address;
 
 import javax.persistence.Embedded;
 
-public class LocationsDTO {
-    public Long id;
+public class LocationDtoPost {
     public String distributorName;
     @Embedded
     public Address address;
     public Long kmAllocated;
-    @JsonProperty("api_url")
-    public String url;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDistributorName() {
         return distributorName;
@@ -44,13 +32,5 @@ public class LocationsDTO {
 
     public void setKmAllocated(Long kmAllocated) {
         this.kmAllocated = kmAllocated;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

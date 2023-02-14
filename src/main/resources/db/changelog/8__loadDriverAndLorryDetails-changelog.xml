@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- Driver Details -->
+    <changeSet id="1675261038188-1" author="sriprasath">
+        <insert tableName="driver">
+            <column name="name" value="Eren Yeager"/>
+            <column name="dob" value="24/05/1999"/>
+            <column name="gender" value="male"/>
+            <column name="phone_number1" value="7558174283"/>
+            <column name="phone_number2" value="9788774531"/>
+            <column name="personal_information_id" valueNumeric="null"/>
+            <column name="address" value="Door No: 5"/>
+            <column name="city" value="shiganshina"/>
+            <column name="state" value="Maria Wall"/>
+            <column name="zipcode" value="123455"/>
+        </insert>
+    </changeSet>
+
+    <!-- PERSONAL INFORMATION TABLE -->
+    <changeSet id="1675261160817-1" author="sriprasath">
+        <insert tableName="personal_information">
+            <column name="nationality" value="Paradise Island"/>
+            <column name="religion" value="Christanity"/>
+            <column name="martial_status" value="Single"/>
+            <column name="employment_of_spouse" value="NOT_APPLICABLE"/>
+            <column name="children" valueNumeric="0"/>
+            <column name="driver_licence" value="1234 1234 1234 1234"/>
+            <column name="aadhar_no" value="1234 1234 1234"/>
+            <column name="whatsapp_no" value="7558174283"/>
+            <column name="driver_id" valueNumeric="null"/>
+        </insert>
+    </changeSet>
+
+    <!-- EMERGENCY CONTACT DETAILS -->
+    <changeSet id="1675261243288-1" author="sriprasath">
+        <insert tableName="emergency_contact">
+            <column name="name" value="Mikasa"/>
+            <column name="relation_ship" value="Girl Friend"/>
+            <column name="phone_number" value="7558174283"/>
+            <column name="driver_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- FAMILY INFORMATION DETAILS -->
+    <changeSet id="1675261285452-1" author="sriprasath">
+        <insert tableName="family_information">
+            <column name="name" value="Mikasa"/>
+            <column name="dob" value="24/05/1999"/>
+            <column name="relation_ship" value="Girl Friend"/>
+            <column name="driver_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- FAMILY INFORMATION DETAILS -->
+    <changeSet id="1675261332508-1" author="sriprasath">
+        <insert tableName="family_information">
+            <column name="name" value="Girisha Yeager"/>
+            <column name="dob" value="24/05/1989"/>
+            <column name="relation_ship" value="Father"/>
+            <column name="driver_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- FOREIGN KEY CONSTRAINS -->
+    <changeSet id="1675351763179-1" author="sriprasath">
+        <update tableName="driver">
+            <column name="personal_information_id" valueNumeric="1"/>
+            <where>id=1</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="1675352053775-1" author="sriprasath">
+        <update tableName="personal_information">
+            <column name="driver_id" valueNumeric="1"/>
+            <where>id=1</where>
+        </update>
+    </changeSet>
+
+    <!-- Lorry Details -->
+    <changeSet id="1675352337333-1" author="sriprasath">
+        <insert tableName="lorry">
+            <column name="number_plate" value="TN 36 F 1234"/>
+            <column name="type" value="ecomet"/>
+            <column name="model_number" value="1651 HE"/>
+            <column name="manufacturer" value="Ashok Leyland"/>
+        </insert>
+    </changeSet>
+
+    <!-- Lorry and Driver Details -->
+    <changeSet id="1675352474809-1" author="sriprasath">
+        <insert tableName="lorry_driver">
+            <column name="driver_id" valueNumeric="1"/>
+            <column name="lorry_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

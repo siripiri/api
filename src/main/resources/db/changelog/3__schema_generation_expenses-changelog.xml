@@ -12,8 +12,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_expensescategory"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="name" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
@@ -24,8 +24,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_expenses"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="amount" type="VARCHAR(255)"/>
             <column name="date" type="VARCHAR(255)"/>
@@ -41,8 +41,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_fuel"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="current_price" type="VARCHAR(255)"/>
             <column name="liter_filled" type="BIGINT"/>
             <column name="payment_mode" type="VARCHAR(255)"/>

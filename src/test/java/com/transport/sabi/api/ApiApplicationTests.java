@@ -2,7 +2,7 @@ package com.transport.sabi.api;
 
 import com.transport.sabi.api.domain.Address;
 import com.transport.sabi.api.domain.Location;
-import com.transport.sabi.api.domain.repository.LocationRepository;
+import com.transport.sabi.api.repository.LocationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

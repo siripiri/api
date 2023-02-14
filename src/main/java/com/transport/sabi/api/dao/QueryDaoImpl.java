@@ -2,7 +2,8 @@ package com.transport.sabi.api.dao;
 
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LorryMapper;
-import com.transport.sabi.api.v1.model.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationTripDto;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,6 +89,25 @@ public class QueryDaoImpl implements QueryDao {
     }
 
     @Override
+    public Object getLorryAndDriverByLorryId(Long id) {
+        EntityManager entityManager = getEntityManager();
+        try{
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("select D.ID as DRIVER_ID " +
+                    "from LORRY L " +
+                    "left join LORRY_DRIVER LD on L.ID = LD.LORRY_ID " +
+                    "left join DRIVER D on D.ID=LD.DRIVER_ID " +
+                    "where L.ID = ?1");
+            query.setParameter(1, id);
+            return query.getSingleResult();
+        } catch (ResourceNotFoundException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
     public List<Object[]> getDriversWithLorry() {
         EntityManager entityManager = getEntityManager();
         try {
@@ -118,6 +138,54 @@ public class QueryDaoImpl implements QueryDao {
             return query.executeUpdate();
         } catch (Exception e) {
             return -1;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<Object[]> getAllTripTable() {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("SELECT T.ID, T.DATE, T.PLANT_TO_DISTRIBUTOR, T.DISTRIBUTOR_TO_PLANT," +
+                    " T.PLANT_START, T.DES_END, T.DES_START, T.PLANT_END, T.LOCATION_ID, L.DISTRIBUTOR_NAME, L.CITY, " +
+                    " L.KM_ALLOCATED, T.LORRY_ID, LO.NUMBER_PLATE, T.DRIVER_ID, D.NAME  " +
+                    " FROM TRIP_DETAIL T" +
+                    " LEFT JOIN LOCATION L ON T.LOCATION_ID = L.ID" +
+                    " LEFT JOIN LORRY LO ON T.LORRY_ID = LO.ID" +
+                    " LEFT JOIN DRIVER D ON T.DRIVER_ID = D.ID;");
+            return query.getResultList();
+        } catch (ResourceNotFoundException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<Object[]> getAllLorryNameAndId() {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("SELECT L.ID, L.NUMBER_PLATE  FROM LORRY L;");
+            return query.getResultList();
+        } catch (ResourceNotFoundException e) {
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<Object[]> getAllLocationTrip() {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            Query query = entityManager.createNativeQuery("SELECT L.ID, L.DISTRIBUTOR_NAME, L.CITY  FROM LOCATION L;");
+            return query.getResultList();
+        } catch (ResourceNotFoundException e) {
+            return null;
         } finally {
             entityManager.close();
         }

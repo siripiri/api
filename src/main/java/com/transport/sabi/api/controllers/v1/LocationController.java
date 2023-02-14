@@ -2,8 +2,9 @@ package com.transport.sabi.api.controllers.v1;
 
 import com.transport.sabi.api.controllers.RestResponseEntityExceptionHandler;
 import com.transport.sabi.api.services.LocationService;
-import com.transport.sabi.api.v1.model.LocationDtoPost;
-import com.transport.sabi.api.v1.model.LocationsDTO;
+import com.transport.sabi.api.v1.model.location.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationTripDto;
+import com.transport.sabi.api.v1.model.location.LocationsDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,9 @@ public class LocationController {
     public ResponseEntity<String> deleteLocation(@PathVariable String id) {
         locationService.deleteLocationById(Long.valueOf(id));
         return new ResponseEntity<String>("Deleted the location with id:" + id, HttpStatus.OK);
+    }
+    @GetMapping(value = "/tripTable", produces = "application/json")
+    public ResponseEntity<List<LocationTripDto>> getAllLocationDis() {
+        return new ResponseEntity<>(locationService.getAllLocationTrip(), HttpStatus.OK);
     }
 }

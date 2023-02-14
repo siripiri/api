@@ -7,5 +7,10 @@
     <include file="db/changelog/1__schema_generation_Location-changelog.xml"/>
     <include file="db/changelog/2___schema_generation_Lorry_Driver-changelog.xml"/>
     <include file="db/changelog/3__schema_generation_expenses-changelog.xml"/>
-    <include file="db/changelog/4__loadLocationData-changelog.xml"/>
+    <include file="db/changelog/4__schema_generation_trip-changelog.xml"/>
+    <include file="db/changelog/5__schema_generation_loads-changelog.xml"/>
+    <include file="db/changelog/6__loadLocationData-changelog.xml"/>
+    <include file="db/changelog/7__loadCylinderDetailsData-changelog.xml"/>
+    <include file="db/changelog/8__loadDriverAndLorryDetails-changelog.xml"/>
+    <include file="db/changelog/9__loadTripDetails-changelog.xml"/>
 </databaseChangeLog>

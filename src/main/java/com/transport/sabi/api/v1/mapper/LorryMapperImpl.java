@@ -1,7 +1,8 @@
 package com.transport.sabi.api.v1.mapper;
 
 import com.transport.sabi.api.domain.Lorry;
-import com.transport.sabi.api.v1.model.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,5 +51,26 @@ public class LorryMapperImpl implements LorryMapper {
         lorryDto.setDriverName((String) objects[5]);
 
         return lorryDto;
+    }
+
+    @Override
+    public LorryIdPlateDto objectsToLorryNameWithId(Object[] objects) {
+        if(objects == null) return null;
+
+        LorryIdPlateDto lorryIdPlateDto = new LorryIdPlateDto();
+        lorryIdPlateDto.setId(Long.valueOf(String.valueOf(objects[0])));
+        lorryIdPlateDto.setNumberPlate(String.valueOf(objects[1]));
+        return lorryIdPlateDto;
+    }
+
+    @Override
+    public LorryIdPlateDto lorryToLorryIdPlateDto(Lorry lorry) {
+       if(lorry == null) return null;
+
+       LorryIdPlateDto lorryIdPlateDto = new LorryIdPlateDto();
+       lorryIdPlateDto.setNumberPlate(lorry.getNumberPlate());
+       lorryIdPlateDto.setId(lorry.getId());
+
+       return lorryIdPlateDto;
     }
 }

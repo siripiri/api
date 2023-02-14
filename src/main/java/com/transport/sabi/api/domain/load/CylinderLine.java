@@ -1,4 +1,7 @@
-package com.transport.sabi.api.domain;
+package com.transport.sabi.api.domain.load;
+
+import com.transport.sabi.api.domain.BaseEntity;
+import com.transport.sabi.api.domain.TripDetail;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

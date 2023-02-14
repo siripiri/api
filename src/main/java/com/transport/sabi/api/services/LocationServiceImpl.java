@@ -2,11 +2,12 @@ package com.transport.sabi.api.services;
 
 import com.transport.sabi.api.dao.QueryDao;
 import com.transport.sabi.api.domain.Location;
-import com.transport.sabi.api.domain.repository.LocationRepository;
+import com.transport.sabi.api.repository.LocationRepository;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LocationMapper;
-import com.transport.sabi.api.v1.model.LocationDtoPost;
-import com.transport.sabi.api.v1.model.LocationsDTO;
+import com.transport.sabi.api.v1.model.location.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationTripDto;
+import com.transport.sabi.api.v1.model.location.LocationsDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,5 +67,13 @@ public class LocationServiceImpl implements LocationService{
     @Override
     public void deleteLocationById(Long id) {
         locationRepository.deleteById(id);
+    }
+
+    @Override
+    public List<LocationTripDto> getAllLocationTrip() {
+        return queryDao.getAllLocationTrip()
+                .stream()
+                .map(locationMapper::getLocationTrip)
+                .collect(Collectors.toList());
     }
 }

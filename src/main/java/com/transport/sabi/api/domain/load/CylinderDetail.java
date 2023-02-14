@@ -1,9 +1,11 @@
-package com.transport.sabi.api.domain;
+package com.transport.sabi.api.domain.load;
+
+import com.transport.sabi.api.domain.BaseEntity;
 
 import javax.persistence.Entity;
 
 @Entity
-public class CylinderDetail extends BaseEntity{
+public class CylinderDetail extends BaseEntity {
     private String type;
     private String description;
 

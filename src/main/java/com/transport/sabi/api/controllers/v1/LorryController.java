@@ -3,7 +3,8 @@ package com.transport.sabi.api.controllers.v1;
 import com.transport.sabi.api.controllers.RestResponseEntityExceptionHandler;
 import com.transport.sabi.api.services.LorryService;
 import com.transport.sabi.api.services.exception.BadRequestException;
-import com.transport.sabi.api.v1.model.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryDto;
+import com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,5 +74,10 @@ public class LorryController {
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(value = "/numberPlate", produces = "application/json")
+    public ResponseEntity<List<LorryIdPlateDto>> getAllLorryNameAndID() {
+        return new ResponseEntity<>(lorryService.getAllLorryNameAndId(), HttpStatus.OK);
     }
 }

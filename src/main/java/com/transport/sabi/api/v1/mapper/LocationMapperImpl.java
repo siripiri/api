@@ -1,8 +1,9 @@
 package com.transport.sabi.api.v1.mapper;
 
 import com.transport.sabi.api.domain.Location;
-import com.transport.sabi.api.v1.model.LocationDtoPost;
-import com.transport.sabi.api.v1.model.LocationsDTO;
+import com.transport.sabi.api.v1.model.location.LocationDtoPost;
+import com.transport.sabi.api.v1.model.location.LocationTripDto;
+import com.transport.sabi.api.v1.model.location.LocationsDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,5 +35,29 @@ public class LocationMapperImpl implements LocationMapper {
         location.setKmAllocated(locationDtoPost.getKmAllocated());
 
         return location;
+    }
+
+    @Override
+    public LocationTripDto getLocationTrip(Object[] objects) {
+        if(objects == null) return null;
+
+        LocationTripDto locationTripDto = new LocationTripDto();
+        locationTripDto.setId(Long.valueOf(String.valueOf(objects[0])));
+        locationTripDto.setDistributorName(String.valueOf(objects[1]));
+        locationTripDto.setCity(String.valueOf(objects[2]));
+
+        return locationTripDto;
+    }
+
+    @Override
+    public LocationTripDto locationToLocationTripDto(Location location) {
+        if(location == null) return null;
+
+        LocationTripDto locationTripDto = new LocationTripDto();
+        locationTripDto.setId(location.getId());
+        locationTripDto.setCity(location.getAddress().getCity());
+        locationTripDto.setDistributorName(location.getDistributorName());
+
+        return locationTripDto;
     }
 }

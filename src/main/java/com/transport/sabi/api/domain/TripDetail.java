@@ -1,5 +1,8 @@
 package com.transport.sabi.api.domain;
 
+import com.transport.sabi.api.domain.driver.Driver;
+import com.transport.sabi.api.domain.load.CylinderLine;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -7,25 +10,27 @@ import java.util.Set;
 
 @Entity
 public class TripDetail extends BaseEntity {
-    private Timestamp date;
+    private String date;
     private Long plantToDistributor;
     private Long distributorToPlant;
-    private Timestamp plantStart;
-    private Timestamp desEnd;
-    private Timestamp desStart;
-    private Timestamp plantEnd;
-    @OneToOne
+    private String plantStart;
+    private String desEnd;
+    private String desStart;
+    private String plantEnd;
+    @ManyToOne
     public Location location;
-    @OneToOne
+    @ManyToOne
     public Lorry lorry;
+    @ManyToOne
+    public Driver driver;
     @OneToMany(mappedBy = "tripDetail", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    public Set<CylinderLine> cylinderLineSet = new HashSet<>();
+    private Set<CylinderLine> cylinderLineSet = new HashSet<>();
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -45,35 +50,35 @@ public class TripDetail extends BaseEntity {
         this.distributorToPlant = distributorToPlant;
     }
 
-    public Timestamp getPlantStart() {
+    public String getPlantStart() {
         return plantStart;
     }
 
-    public void setPlantStart(Timestamp plantStart) {
+    public void setPlantStart(String plantStart) {
         this.plantStart = plantStart;
     }
 
-    public Timestamp getDesEnd() {
+    public String getDesEnd() {
         return desEnd;
     }
 
-    public void setDesEnd(Timestamp desEnd) {
+    public void setDesEnd(String desEnd) {
         this.desEnd = desEnd;
     }
 
-    public Timestamp getDesStart() {
+    public String getDesStart() {
         return desStart;
     }
 
-    public void setDesStart(Timestamp desStart) {
+    public void setDesStart(String desStart) {
         this.desStart = desStart;
     }
 
-    public Timestamp getPlantEnd() {
+    public String getPlantEnd() {
         return plantEnd;
     }
 
-    public void setPlantEnd(Timestamp plantEnd) {
+    public void setPlantEnd(String plantEnd) {
         this.plantEnd = plantEnd;
     }
 
@@ -91,6 +96,14 @@ public class TripDetail extends BaseEntity {
 
     public void setLorry(Lorry lorry) {
         this.lorry = lorry;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public Set<CylinderLine> getCylinderLineSet() {

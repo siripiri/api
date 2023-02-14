@@ -1,4 +1,4 @@
-package com.transport.sabi.api.v1.model;
+package com.transport.sabi.api.v1.model.lorry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

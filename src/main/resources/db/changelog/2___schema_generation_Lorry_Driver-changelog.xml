@@ -12,8 +12,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_lorry"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="number_plate" type="VARCHAR(255)"/>
             <column name="type" type="VARCHAR(255)"/>
             <column name="model_number" type="VARCHAR(255)"/>
@@ -27,8 +27,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_driver"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="dob" type="VARCHAR(255)"/>
             <column name="gender" type="VARCHAR(255)"/>
@@ -48,8 +48,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_personalinformation"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="nationality" type="VARCHAR(255)"/>
             <column name="religion" type="VARCHAR(255)"/>
             <column name="martial_status" type="VARCHAR(255)"/>
@@ -80,8 +80,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_emergencycontact"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="relation_ship" type="VARCHAR(255)"/>
             <column name="phone_number" type="VARCHAR(255)"/>
@@ -96,8 +96,8 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_familyinformation"/>
             </column>
-            <column name="created_date" type="DATETIME"/>
-            <column name="last_updated_date" type="DATETIME"/>
+            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="dob" type="VARCHAR(255)"/>
             <column name="relation_ship" type="VARCHAR(255)"/>
