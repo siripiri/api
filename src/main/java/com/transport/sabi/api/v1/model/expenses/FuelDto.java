@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FuelDto {
     private Long id;
     private String currentPrice;
-    private Long literFilled;
+    private String literFilled;
     private String paymentMode;
     private ExpensesDto expenses;
     @JsonProperty("api_url")
@@ -27,11 +27,11 @@ public class FuelDto {
         this.currentPrice = currentPrice;
     }
 
-    public Long getLiterFilled() {
+    public String getLiterFilled() {
         return literFilled;
     }
 
-    public void setLiterFilled(Long literFilled) {
+    public void setLiterFilled(String literFilled) {
         this.literFilled = literFilled;
     }
 

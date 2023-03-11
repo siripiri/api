@@ -21,13 +21,13 @@ public class Driver extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "lorry_id"))
     public Set<Lorry> lorrySet = new HashSet<>();
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
     private Set<EmergencyContact> emergencyContacts;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<FamilyInformation> familyInformations;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PersonalInformation personalInformation;
 
 

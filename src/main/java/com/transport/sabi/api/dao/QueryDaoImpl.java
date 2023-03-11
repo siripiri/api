@@ -1,9 +1,13 @@
 package com.transport.sabi.api.dao;
 
+import com.transport.sabi.api.services.exception.BadRequestException;
 import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.LorryMapper;
+import com.transport.sabi.api.v1.model.driverDto.DriverNameDto;
 import com.transport.sabi.api.v1.model.location.LocationDtoPost;
-import com.transport.sabi.api.v1.model.location.LocationTripDto;
+import com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +17,8 @@ import java.util.List;
 @Component
 @Transactional
 public class QueryDaoImpl implements QueryDao {
+
+    Logger logger = LoggerFactory.getLogger(QueryDaoImpl.class.getName());
 
     private final EntityManagerFactory entityManagerFactory;
     private final LorryMapper lorryMapper;
@@ -164,14 +170,15 @@ public class QueryDaoImpl implements QueryDao {
     }
 
     @Override
-    public List<Object[]> getAllLorryNameAndId() {
+    public List<LorryIdPlateDto> getAllLorryNameAndId() {
         EntityManager entityManager = getEntityManager();
         try {
             entityManager.joinTransaction();
-            Query query = entityManager.createNativeQuery("SELECT L.ID, L.NUMBER_PLATE  FROM LORRY L;");
-            return query.getResultList();
+            String query = "SELECT NEW com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto(l.id, l.numberPlate) FROM Lorry l";
+            TypedQuery<LorryIdPlateDto> typedQuery = entityManager.createQuery(query, LorryIdPlateDto.class);
+            return typedQuery.getResultList();
         } catch (ResourceNotFoundException e) {
-            return null;
+            throw new ResourceNotFoundException("Not Found");
         } finally {
             entityManager.close();
         }
@@ -185,7 +192,23 @@ public class QueryDaoImpl implements QueryDao {
             Query query = entityManager.createNativeQuery("SELECT L.ID, L.DISTRIBUTOR_NAME, L.CITY  FROM LOCATION L;");
             return query.getResultList();
         } catch (ResourceNotFoundException e) {
-            return null;
+            throw new ResourceNotFoundException("Not Found");
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<DriverNameDto> getAllDriverName() {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.joinTransaction();
+            String query = "SELECT NEW com.transport.sabi.api.v1.model.driverDto.DriverNameDto(d.id, d.name) FROM Driver d";
+            TypedQuery<DriverNameDto> typedQuery = entityManager.createQuery(query, DriverNameDto.class);
+            logger.info("Fetching drivers details from DB");
+            return typedQuery.getResultList();
+        } catch (Exception e) {
+            throw new BadRequestException("Bad Request");
         } finally {
             entityManager.close();
         }

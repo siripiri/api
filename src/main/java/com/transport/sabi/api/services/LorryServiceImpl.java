@@ -135,9 +135,6 @@ public class LorryServiceImpl implements LorryService {
 
     @Override
     public List<LorryIdPlateDto> getAllLorryNameAndId() {
-        return queryDao.getAllLorryNameAndId()
-                .stream()
-                .map(lorryMapper::objectsToLorryNameWithId)
-                .collect(Collectors.toList());
+        return queryDao.getAllLorryNameAndId();
     }
 }

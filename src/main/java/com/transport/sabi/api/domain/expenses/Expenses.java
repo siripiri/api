@@ -1,9 +1,10 @@
 package com.transport.sabi.api.domain.expenses;
 
 import com.transport.sabi.api.domain.BaseEntity;
+import com.transport.sabi.api.domain.Lorry;
+import com.transport.sabi.api.domain.driver.Driver;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Expenses extends BaseEntity {
@@ -13,6 +14,10 @@ public class Expenses extends BaseEntity {
     private String notes;
     @ManyToOne
     private ExpensesCategory expensesCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Driver driver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lorry lorry;
 
     public String getName() {
         return name;
@@ -52,5 +57,21 @@ public class Expenses extends BaseEntity {
 
     public void setExpensesCategory(ExpensesCategory expensesCategory) {
         this.expensesCategory = expensesCategory;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public Lorry getLorry() {
+        return lorry;
+    }
+
+    public void setLorry(Lorry lorry) {
+        this.lorry = lorry;
     }
 }

@@ -1,6 +1,8 @@
 package com.transport.sabi.api.v1.model.expenses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.transport.sabi.api.v1.model.driverDto.DriverNameDto;
+import com.transport.sabi.api.v1.model.lorry.LorryIdPlateDto;
 
 public class ExpensesDto {
 
@@ -10,6 +12,8 @@ public class ExpensesDto {
     private String notes;
     private String date;
     private String expensesCategory;
+    private LorryIdPlateDto lorry;
+    private DriverNameDto driver;
     @JsonProperty("api_url")
     public String url;
 
@@ -67,5 +71,36 @@ public class ExpensesDto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public LorryIdPlateDto getLorry() {
+        return lorry;
+    }
+
+    public void setLorry(LorryIdPlateDto lorry) {
+        this.lorry = lorry;
+    }
+
+    public DriverNameDto getDriver() {
+        return driver;
+    }
+
+    public void setDriver(DriverNameDto driver) {
+        this.driver = driver;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                    "id:" + id +
+                    ", name:'" + name + '\'' +
+                    ", amount:'" + amount + '\'' +
+                    ", notes:'" + notes + '\'' +
+                    ", date:'" + date + '\'' +
+                    ", expensesCategory:'" + expensesCategory + '\'' +
+                    ", lorry:" + (lorry!=null ? this.getLorry().toString() : "null") +
+                    ", driver:" + (driver!=null ? this.getDriver().toString() : "null") +
+                    ", url:'" + url + '\'' +
+                '}';
     }
 }

@@ -60,6 +60,8 @@ public class LoadData implements CommandLineRunner {
         expenses1.setDate("24/05/1999");
         expenses1.setNotes("Hello World");
         ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElse(null);
+        expenses1.setDriver(driverRepository.getReferenceById(1L));
+        expenses1.setLorry(lorryRepository.getReferenceById(1L));
         expenses1.setExpensesCategory(expensesCategory);
 
         Expenses expenses2 = new Expenses();
@@ -68,6 +70,8 @@ public class LoadData implements CommandLineRunner {
         expenses2.setDate("24/05/1999");
         expenses2.setNotes("Hello World");
         expensesCategory = expensesCategoryRepository.findByName("Repair").orElse(null);
+        expenses2.setDriver(driverRepository.getReferenceById(1L));
+        expenses2.setLorry(lorryRepository.getReferenceById(1L));
         expenses2.setExpensesCategory(expensesCategory);
 
         return List.of(expenses1, expenses2);
@@ -80,6 +84,7 @@ public class LoadData implements CommandLineRunner {
         expenses1.setDate("24/05/1999");
         expenses1.setNotes("Hello World");
         ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElse(null);
+        expenses1.setLorry(lorryRepository.getReferenceById(1L));
         expenses1.setExpensesCategory(expensesCategory);
 
         Expenses saved = expensesRespository.saveAndFlush(expenses1);
@@ -87,7 +92,7 @@ public class LoadData implements CommandLineRunner {
         Fuel fuel = new Fuel();
         fuel.setExpenses(saved);
         fuel.setCurrentPrice("100.00");
-        fuel.setLiterFilled(5L);
+        fuel.setLiterFilled("5.00");
         fuel.setPaymentMode("CARD");
 
         return fuel;

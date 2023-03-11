@@ -13,5 +13,5 @@ public interface FuelRepository extends JpaRepository<Fuel, Long> {
     @Transactional
     @Modifying
     @Query("update Fuel f set f.currentPrice = ?1, f.literFilled = ?2, f.paymentMode = ?3 where id = ?4")
-    int updateFuelExpenses(@NonNull String currentPrice, @NonNull Long literFilled, @NonNull String paymentMode, @NotNull Long id);
+    int updateFuelExpenses(@NonNull String currentPrice, @NonNull String literFilled, @NonNull String paymentMode, @NotNull Long id);
 }

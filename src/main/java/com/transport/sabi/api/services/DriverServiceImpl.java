@@ -1,5 +1,6 @@
 package com.transport.sabi.api.services;
 
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.transport.sabi.api.dao.QueryDao;
 import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.driver.EmergencyContact;
@@ -13,6 +14,9 @@ import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.DriverMapper;
 import com.transport.sabi.api.v1.model.driverDto.DriverDto;
 import com.transport.sabi.api.v1.model.driverDto.DriverFormDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverNameDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DriverServiceImpl implements DriverService {
+
+    Logger log = LoggerFactory.getLogger(DriverServiceImpl.class);
 
     private final QueryDao queryDao;
     private final DriverRepository driverRepository;
@@ -147,6 +153,17 @@ public class DriverServiceImpl implements DriverService {
         DriverFormDto savedDriverFormDto = driverMapper.driverToDriverFormDto(savedDriver);
         savedDriverFormDto.setUrl("/api/v1/driver/" + savedDriverFormDto.getProfile().getId());
         return savedDriverFormDto;
+    }
+
+    @Override
+    public List<DriverNameDto> getAllDriverName() {
+        List<DriverNameDto> driverNameDtos = queryDao.getAllDriverName();
+        log.info(driverNameDtos.toString());
+        if(driverNameDtos.isEmpty()){
+            log.info("No record found in DB");
+            throw new ResourceNotFoundException("Not Found");
+        }
+        return driverNameDtos;
     }
 
 }

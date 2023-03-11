@@ -4,6 +4,14 @@ public class LorryIdPlateDto {
     public Long id;
     public String numberPlate;
 
+    public LorryIdPlateDto(Long id, String numberPlate) {
+        this.id = id;
+        this.numberPlate = numberPlate;
+    }
+
+    public LorryIdPlateDto() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -18,5 +26,13 @@ public class LorryIdPlateDto {
 
     public void setNumberPlate(String numberPlate) {
         this.numberPlate = numberPlate;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                    "id:" + id +
+                    ", numberPlate:'" + numberPlate + '\'' +
+                '}';
     }
 }

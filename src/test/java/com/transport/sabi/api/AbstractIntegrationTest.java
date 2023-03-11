@@ -5,7 +5,6 @@ import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.driver.EmergencyContact;
 import com.transport.sabi.api.domain.driver.FamilyInformation;
 import com.transport.sabi.api.domain.driver.PersonalInformation;
-import com.transport.sabi.api.domain.repository.*;
 import com.transport.sabi.api.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

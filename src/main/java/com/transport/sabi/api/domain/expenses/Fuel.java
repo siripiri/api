@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Fuel extends BaseEntity {
     private String currentPrice;
-    private Long literFilled;
+    private String literFilled;
     private String paymentMode;
     @OneToOne
     private Expenses expenses;
@@ -21,11 +21,11 @@ public class Fuel extends BaseEntity {
         this.currentPrice = currentPrice;
     }
 
-    public Long getLiterFilled() {
+    public String getLiterFilled() {
         return literFilled;
     }
 
-    public void setLiterFilled(Long literFilled) {
+    public void setLiterFilled(String literFilled) {
         this.literFilled = literFilled;
     }
 

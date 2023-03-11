@@ -19,32 +19,36 @@
     </changeSet>
 
     <!-- EXPENSES  -->
-    <changeSet id="1674490883149-1" author="sriprasath">
+    <changeSet id="1678521834814-1" author="sripr">
         <createTable tableName="expenses">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_expenses"/>
             </column>
-            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_updated_date" type="DATETIME"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="amount" type="VARCHAR(255)"/>
             <column name="date" type="VARCHAR(255)"/>
             <column name="notes" type="VARCHAR(255)"/>
             <column name="expenses_category_id" type="BIGINT"/>
+            <column name="driver_id" type="BIGINT"/>
+            <column name="lorry_id" type="BIGINT"/>
         </createTable>
+        <addForeignKeyConstraint baseColumnNames="driver_id" baseTableName="expenses" constraintName="FK_EXPENSES_ON_DRIVER" referencedColumnNames="id" referencedTableName="driver"/>
         <addForeignKeyConstraint baseColumnNames="expenses_category_id" baseTableName="expenses" constraintName="FK_EXPENSES_ON_EXPENSESCATEGORY" referencedColumnNames="id" referencedTableName="expenses_category"/>
+        <addForeignKeyConstraint baseColumnNames="lorry_id" baseTableName="expenses" constraintName="FK_EXPENSES_ON_LORRY" referencedColumnNames="id" referencedTableName="lorry"/>
     </changeSet>
 
     <!-- FUEL EXPENSES -->
-    <changeSet id="1674491017366-1" author="sriprasath">
+    <changeSet id="1678521377912-1" author="sripr">
         <createTable tableName="fuel">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_fuel"/>
             </column>
-            <column name="created_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="last_updated_date" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_updated_date" type="DATETIME"/>
             <column name="current_price" type="VARCHAR(255)"/>
-            <column name="liter_filled" type="BIGINT"/>
+            <column name="liter_filled" type="VARCHAR(255)"/>
             <column name="payment_mode" type="VARCHAR(255)"/>
             <column name="expenses_id" type="BIGINT"/>
         </createTable>

@@ -20,7 +20,7 @@ public class ExpensesController {
     }
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<ExpensesDto>> getLocations() {
+    public ResponseEntity<List<ExpensesDto>> getAllExpenses() {
         return new ResponseEntity<>(expenseService.getAllExpensesWithCategory(), HttpStatus.OK);
     }
 

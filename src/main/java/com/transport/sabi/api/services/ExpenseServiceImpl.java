@@ -1,16 +1,19 @@
 package com.transport.sabi.api.services;
 
+import com.transport.sabi.api.domain.Lorry;
+import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.expenses.Expenses;
 import com.transport.sabi.api.domain.expenses.ExpensesCategory;
 import com.transport.sabi.api.domain.expenses.Fuel;
-import com.transport.sabi.api.repository.ExpensesCategoryRepository;
-import com.transport.sabi.api.repository.ExpensesRespository;
-import com.transport.sabi.api.repository.FuelRepository;
+import com.transport.sabi.api.repository.*;
 import com.transport.sabi.api.services.exception.BadRequestException;
+import com.transport.sabi.api.services.exception.ResourceNotFoundException;
 import com.transport.sabi.api.v1.mapper.ExpensesMapper;
 import com.transport.sabi.api.v1.model.expenses.ExpensesCategoryDto;
 import com.transport.sabi.api.v1.model.expenses.ExpensesDto;
 import com.transport.sabi.api.v1.model.expenses.FuelDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,27 +22,38 @@ import java.util.stream.Collectors;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
+    Logger log = LoggerFactory.getLogger(ExpenseServiceImpl.class);
+
     private final ExpensesRespository expensesRespository;
     private final ExpensesMapper expensesMapper;
     private final ExpensesCategoryRepository expensesCategoryRepository;
     private final FuelRepository fuelRepository;
+    private final DriverRepository driverRepository;
+    private final LorryRepository lorryRepository;
 
-    public ExpenseServiceImpl(ExpensesRespository expensesRespository, ExpensesMapper expensesMapper,
-                              ExpensesCategoryRepository expensesCategoryRepository,
-                              FuelRepository fuelRepository) {
+    public ExpenseServiceImpl(ExpensesRespository expensesRespository, ExpensesMapper expensesMapper, ExpensesCategoryRepository expensesCategoryRepository, FuelRepository fuelRepository, DriverRepository driverRepository, LorryRepository lorryRepository) {
         this.expensesRespository = expensesRespository;
         this.expensesMapper = expensesMapper;
         this.expensesCategoryRepository = expensesCategoryRepository;
         this.fuelRepository = fuelRepository;
+        this.driverRepository = driverRepository;
+        this.lorryRepository = lorryRepository;
     }
 
     @Override
     public List<ExpensesDto> getAllExpensesWithCategory() {
-        return expensesRespository.findAll()
-                .stream()
-                .map(expensesMapper::expensesToExpensesDto)
-                .peek(expensesDto -> expensesDto.setUrl("/api/v1/expenses/" + expensesDto.getId()))
-                .collect(Collectors.toList());
+        log.info("Fetching expenses list from DB");
+        List<ExpensesDto> expensesDtoList =  expensesRespository.findAll()
+                                                .stream()
+                                                .map(expensesMapper::expensesToExpensesDto)
+                                                .peek(expensesDto -> expensesDto.setUrl("/api/v1/expenses/" + expensesDto.getId()))
+                                                .toList();
+        if(expensesDtoList.isEmpty()) {
+            log.info("No record found in DB");
+            throw new ResourceNotFoundException("Resource Not Found");
+        }
+        log.info(expensesDtoList.toString());
+        return expensesDtoList;
     }
 
     @Override
@@ -56,6 +70,14 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpensesCategory expensesCategory = expensesCategoryRepository.findByName(expensesDto.getExpensesCategory()).orElse(null);
         Expenses expenses = expensesMapper.expensesDtoToExpenses(expensesDto);
         expenses.setExpensesCategory(expensesCategory);
+        if(expensesDto.getDriver() != null){
+            Driver driver = driverRepository.findById(expensesDto.getDriver().getId()).orElseThrow(BadRequestException::new);
+            expenses.setDriver(driver);
+        }
+        if(expensesDto.getLorry() != null){
+            Lorry lorry = lorryRepository.findById(expensesDto.getLorry().getId()).orElseThrow(BadRequestException::new);
+            expenses.setLorry(lorry);
+        }
         return expensesMapper.expensesToExpensesDto(expensesRespository.saveAndFlush(expenses));
     }
 
@@ -93,9 +115,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public FuelDto saveFuelExpenses(FuelDto fuelDto) {
-        ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElse(null);
+        ExpensesCategory expensesCategory = expensesCategoryRepository.findByName("Fuel").orElseThrow(BadRequestException::new);
+        Lorry lorry = lorryRepository.findById(fuelDto.getExpenses().getLorry().getId()).orElseThrow(BadRequestException::new);
         Expenses expenses = expensesMapper.expensesDtoToExpenses(fuelDto.getExpenses());
         expenses.setExpensesCategory(expensesCategory);
+        expenses.setLorry(lorry);
 
         Expenses savedExpenses = expensesRespository.saveAndFlush(expenses);
 

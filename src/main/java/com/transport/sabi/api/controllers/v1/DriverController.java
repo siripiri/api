@@ -1,9 +1,11 @@
 package com.transport.sabi.api.controllers.v1;
 
 import com.transport.sabi.api.controllers.RestResponseEntityExceptionHandler;
+import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.services.DriverService;
 import com.transport.sabi.api.v1.model.driverDto.DriverDto;
 import com.transport.sabi.api.v1.model.driverDto.DriverFormDto;
+import com.transport.sabi.api.v1.model.driverDto.DriverNameDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +49,10 @@ public class DriverController {
         } catch (NumberFormatException e) {
             return new RestResponseEntityExceptionHandler().handleBadRequest(e);
         }
+    }
+
+    @GetMapping(value = "/idAndName", produces = "application/json")
+    public ResponseEntity<List<DriverNameDto>> getDriverNameAndId() {
+        return new ResponseEntity<>(driverService.getAllDriverName(), HttpStatus.OK);
     }
 }
