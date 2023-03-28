@@ -2,7 +2,7 @@ package com.transport.sabi.api.domain.driver;
 
 import com.transport.sabi.api.domain.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 

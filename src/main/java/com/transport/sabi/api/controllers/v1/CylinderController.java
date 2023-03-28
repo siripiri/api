@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/cylinder")
-@CrossOrigin(maxAge = 3600)
 public class CylinderController {
     private final CylinderService cylinderService;
 

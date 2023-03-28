@@ -4,7 +4,7 @@ import com.transport.sabi.api.domain.BaseEntity;
 import com.transport.sabi.api.domain.Lorry;
 import com.transport.sabi.api.domain.driver.Driver;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Expenses extends BaseEntity {

@@ -1,11 +1,10 @@
 package com.transport.sabi.api.domain.driver;
 
 import com.transport.sabi.api.domain.BaseEntity;
-import com.transport.sabi.api.domain.driver.Driver;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class PersonalInformation extends BaseEntity {

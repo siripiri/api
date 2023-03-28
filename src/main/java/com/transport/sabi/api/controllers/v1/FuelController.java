@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/fuel")
-@CrossOrigin(maxAge = 3600)
 public class FuelController {
     private final ExpenseService expenseService;
 

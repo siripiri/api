@@ -3,9 +3,9 @@ package com.transport.sabi.api.domain.load;
 import com.transport.sabi.api.domain.BaseEntity;
 import com.transport.sabi.api.domain.TripDetail;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class CylinderLine extends BaseEntity {

@@ -1,11 +1,11 @@
 package com.transport.sabi.api.dao;
 
 import com.transport.sabi.api.domain.driver.Driver;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.transaction.Transactional;
 
 @Component
 @Transactional

@@ -65,7 +65,7 @@ public class LorryServiceImpl implements LorryService {
     }
 
     private boolean numberPlateCheck(String numberPlate) {
-        Lorry lorry = this.lorryRepository.findByNumberPlate(numberPlate).orElse(null);
+        Lorry lorry = this.lorryRepository.findByNumberPlate(numberPlate);
         return lorry == null;
     }
 

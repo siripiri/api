@@ -1,7 +1,8 @@
 package com.transport.sabi.api.domain;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+
 
 @Entity
 public class Location extends BaseEntity {

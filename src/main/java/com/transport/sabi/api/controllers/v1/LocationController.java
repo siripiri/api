@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/location")
-@CrossOrigin(maxAge = 3600)
 public class LocationController {
     private final LocationService locationService;
 

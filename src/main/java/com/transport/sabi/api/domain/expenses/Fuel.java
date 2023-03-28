@@ -2,8 +2,8 @@ package com.transport.sabi.api.domain.expenses;
 
 import com.transport.sabi.api.domain.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Fuel extends BaseEntity {

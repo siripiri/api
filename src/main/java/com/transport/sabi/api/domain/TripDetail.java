@@ -3,7 +3,7 @@ package com.transport.sabi.api.domain;
 import com.transport.sabi.api.domain.driver.Driver;
 import com.transport.sabi.api.domain.load.CylinderLine;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;

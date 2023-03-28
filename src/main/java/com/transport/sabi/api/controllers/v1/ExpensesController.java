@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/expenses")
-@CrossOrigin(maxAge = 3600)
 public class ExpensesController {
     private final ExpenseService expenseService;
 

@@ -3,7 +3,7 @@ package com.transport.sabi.api.v1.model.driverDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.transport.sabi.api.domain.Address;
 
-import javax.persistence.Embedded;
+import jakarta.persistence.Embedded;
 
 public class DriverDto {
     public Long id;

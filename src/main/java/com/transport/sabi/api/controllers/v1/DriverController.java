@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/driver")
-@CrossOrigin(maxAge = 3600)
 public class DriverController {
     private final DriverService driverService;
 

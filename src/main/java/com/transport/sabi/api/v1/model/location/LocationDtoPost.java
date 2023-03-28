@@ -2,7 +2,7 @@ package com.transport.sabi.api.v1.model.location;
 
 import com.transport.sabi.api.domain.Address;
 
-import javax.persistence.Embedded;
+import jakarta.persistence.Embedded;
 
 public class LocationDtoPost {
     public String distributorName;

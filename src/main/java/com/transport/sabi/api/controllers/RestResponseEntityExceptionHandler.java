@@ -22,7 +22,7 @@ public class RestResponseEntityExceptionHandler extends ResourceNotFoundExceptio
    @ExceptionHandler({BadRequestException.class})
    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadRequest(Exception exception) {
-        return new ResponseEntity<>("Bad Request", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
    }
 
 }

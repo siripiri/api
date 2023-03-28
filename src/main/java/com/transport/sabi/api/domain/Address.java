@@ -1,6 +1,6 @@
 package com.transport.sabi.api.domain;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Address {

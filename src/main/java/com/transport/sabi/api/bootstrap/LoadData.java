@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Component
+
 public class LoadData implements CommandLineRunner {
 
     private final LocationRepository locationRepository;

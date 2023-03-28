@@ -2,7 +2,7 @@ package com.transport.sabi.api.domain.load;
 
 import com.transport.sabi.api.domain.BaseEntity;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class CylinderDetail extends BaseEntity {
