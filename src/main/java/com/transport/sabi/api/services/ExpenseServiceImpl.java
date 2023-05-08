@@ -48,10 +48,6 @@ public class ExpenseServiceImpl implements ExpenseService {
                                                 .map(expensesMapper::expensesToExpensesDto)
                                                 .peek(expensesDto -> expensesDto.setUrl("/api/v1/expenses/" + expensesDto.getId()))
                                                 .toList();
-        if(expensesDtoList.isEmpty()) {
-            log.info("No record found in DB");
-            throw new ResourceNotFoundException("Resource Not Found");
-        }
         log.info(expensesDtoList.toString());
         return expensesDtoList;
     }
